@@ -18,6 +18,7 @@ namespace Winkle
         private string updateInfoUrl = "";
         private List<DescriptionOfChanges> changeLog = new List<DescriptionOfChanges>();
 
+
         public VersionCheck(string appName, string updateUrl)
         {
             applicatenName = appName;
@@ -27,20 +28,22 @@ namespace Winkle
 
         public UpdateInfo checkForUpdate(Version version, bool includeBetaVersions)
         {
-            return _doUpdateCheck(version.Major, version.Minor, version.Build, version.Revision, includeBetaVersions);
+            return _doUpdateCheck(version, includeBetaVersions);
         }
 
-        public UpdateInfo checkForUpdate(System.Reflection.Assembly assembly, bool includeBetaVersions) {
+        public UpdateInfo checkForUpdate(System.Reflection.Assembly assembly, bool includeBetaVersions) 
+        {
                 Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-
-                return _doUpdateCheck(v.Major, v.Minor, v.Build, v.Revision, includeBetaVersions);
+                return _doUpdateCheck(v, includeBetaVersions);
         }
 
-        public UpdateInfo checkForUpdate(int currentMajorVersion, int currentMinorVersion, int currentBuild, int currentRevision, bool includeBetaVersions) {
-            return _doUpdateCheck(currentMajorVersion, currentMinorVersion, currentBuild, currentRevision, includeBetaVersions);
+        public UpdateInfo checkForUpdate(int currentMajorVersion, int currentMinorVersion, int currentBuild, int currentRevision, bool includeBetaVersions) 
+        {
+            Version currentVersion = new Version(currentMajorVersion, currentMinorVersion, currentBuild, currentRevision);
+            return _doUpdateCheck(currentVersion, includeBetaVersions);
         }
 
-        private UpdateInfo _doUpdateCheck(int currentMajorVersion, int currentMinorVersion, int currentBuild, int currentRevision, bool includeBetaVersions) {
+        private UpdateInfo _doUpdateCheck(Version currentVersion, bool includeBetaVersions) {
             UpdateInfo returnCode = new UpdateInfo();
             WinkleResponse = getUpdateFile(updateInfoUrl);
             if (WinkleResponse == null)
@@ -51,31 +54,28 @@ namespace Winkle
                 returnCode.errorDescription = "Cannot download the update file description from " + updateInfoUrl;
                 return returnCode;
             }
-            int major = getLatestMajorVersion(includeBetaVersions);
-            int minor = getLatestMinorVersion(includeBetaVersions);
-            int build = getLatestBuild(includeBetaVersions);
-            int revision = getLatestRevision(includeBetaVersions);
 
-
-
-            getChangeLog();
-           // return returnCode;
+            Version newestAvailableVersion = currentVersion;
             bool updateAvailable = false;
 
-            if (currentMajorVersion < major)
+            getChangeLog(false,currentVersion);
+            changeLog.Sort();
+            changeLog.Reverse();
+            if(changeLog.Count > 0) 
             {
-                updateAvailable = true;
+                newestAvailableVersion = changeLog[0].version;
             }
-            else if (currentMajorVersion == major && currentMinorVersion < minor)
+
+            if (includeBetaVersions)
             {
-                updateAvailable = true;
+                getChangeLog(true, newestAvailableVersion);
             }
-            else if (currentMajorVersion == major && currentMinorVersion == minor && currentBuild < build)
+
+            changeLog.Sort();
+            changeLog.Reverse();
+            if (changeLog.Count > 0)
             {
-                updateAvailable = true;
-            }
-            else if (currentMajorVersion == major && currentMinorVersion == minor && currentBuild == build && currentRevision < revision)
-            {
+                newestAvailableVersion = changeLog[0].version;
                 updateAvailable = true;
             }
 
@@ -83,9 +83,8 @@ namespace Winkle
             {
                 returnCode.updateAvailable = true;
                 returnCode.updateInfoRetrievalSuccessfull = true;
-                returnCode.updateMajor = major;
-                returnCode.updateMinor = minor;
-                returnCode.updateBuild = build;
+                returnCode.version = newestAvailableVersion;
+                returnCode.prettyName = changeLog[0].prettyName;
                 
                 returnCode.manualDownloadUrl = new System.Uri(getDownloadLinkUrl(includeBetaVersions));
 
@@ -94,25 +93,15 @@ namespace Winkle
                     
                     myUpdateNotification.setDownloadLink(returnCode.manualDownloadUrl.ToString());
                     string myDescription = "";
-                    Version newestVersion = new Version("0.0.0.0");
+                    
                     
                     foreach (DescriptionOfChanges myChanges in changeLog) {
-                        if (myChanges.version < newestVersion)
-                        {
-                            myDescription += "New in " + myChanges.getFormattedVersionString() + "\n";
+                            myDescription += myChanges.getFormattedVersionString() + "\n";
                             myDescription += myChanges.updateDescription;
-                            myDescription += "\n--------\n";
-                        }
-                        else
-                        {
-                            string tempString = "New in " + myChanges.getFormattedVersionString() + "\n";
-                            tempString += myChanges.updateDescription;
-                            tempString += "\n----------\n";
-                            myDescription = tempString + myDescription;
-                            newestVersion = myChanges.version;
-                        }
+                            myDescription += "\n============================================\n";
                     }
-                    myUpdateNotification.setVersion(applicatenName, newestVersion.ToString());
+                    myUpdateNotification.setVersion(applicatenName, newestAvailableVersion.ToString());
+                    myUpdateNotification.setShortDescription(applicatenName,newestAvailableVersion.ToString(),currentVersion); 
                     myUpdateNotification.setDescription(myDescription);
                     myUpdateNotification.Show();
                 }
@@ -198,17 +187,51 @@ namespace Winkle
             return WinkleResponse.SelectNodes("Winkle/StableVersions/StableVersion/NewInThisVersion").Item(0).InnerText;
         }
 
-        private void getChangeLog() {
+        private void getChangeLog(bool includeBeta, Version minVersion) {
             try
             {
-                XmlNodeList allChanges = WinkleResponse.SelectNodes("Winkle/StableVersions/StableVersion");
+                XmlNodeList allChanges;
+                if (!includeBeta)
+                {
+                    try 
+                    {
+                        allChanges = WinkleResponse.SelectNodes("Winkle/StableVersions/StableVersion");
+                    }
+                    catch
+                    {
+                        allChanges = null;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        allChanges = WinkleResponse.SelectNodes("Winkle/BetaVersions/BetaVersion");
+                    }
+                    catch
+                    {
+                        allChanges = null;
+                    }
+                }
+
+                if (allChanges == null)
+                {
+                    return;
+                }
                 foreach (XmlNode thisChange in allChanges)
                 {
                     try
                     {
+                        Version localVersion = new Version(getVersion(thisChange, "Major"), getVersion(thisChange, "Minor"), getVersion(thisChange, "Build"), getVersion(thisChange, "Revision"));
+
+                        if (localVersion < minVersion)
+                        {
+                            continue;
+                        }
+
                         DescriptionOfChanges thisVersion = new DescriptionOfChanges();
                         thisVersion.updateDescription = thisChange["NewInThisVersion"].InnerText;
-                        thisVersion.setVersion(getVersion(thisChange, "Major"), getVersion(thisChange, "Minor"), getVersion(thisChange, "Build"), getVersion(thisChange, "Revision"));
+                        thisVersion.version = localVersion;
                         thisVersion.prettyName = getPrettyName(thisChange);
                         changeLog.Add(thisVersion);
                     }

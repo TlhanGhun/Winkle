@@ -27,7 +27,7 @@ namespace WinkleExample
            // string pathToExampleFile = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "winkleExample.xml";
 
             Winkle.VersionCheck myUpdateChecker = new Winkle.VersionCheck("Desktop Google Reader", "file:///Q:/Dev/GitHub/Winkle/WinkleExample/winkleExample.xml");
-            Winkle.UpdateInfo myUpdateResponse = myUpdateChecker.checkForUpdate(System.Reflection.Assembly.GetExecutingAssembly(), false);
+            Winkle.UpdateInfo myUpdateResponse = myUpdateChecker.checkForUpdate(System.Reflection.Assembly.GetExecutingAssembly(), true);
             Console.WriteLine("bla");
         }
     }

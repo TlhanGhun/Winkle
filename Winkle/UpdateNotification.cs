@@ -20,7 +20,13 @@ namespace Winkle
 
         public bool setVersion(string appName, string versionText)
         {
-            this.NewVersionAvailable.Text = "Version " + versionText + " of " + appName + " available";
+            this.NewVersionAvailable.Text = appName + " " + versionText + " available";
+            return true;
+        }
+
+        public bool setShortDescription(string appName, string versionText, Version currentVersion)
+        {
+            this.labelShortDescription.Text = "A newer version of " + appName + " is available for download. The new version is " + versionText + " (you have currently installed " + currentVersion.ToString() + ")";
             return true;
         }
 

@@ -5,28 +5,43 @@
       <Major>1</Major>
       <Minor>1</Minor>
       <Build>99</Build>
-      <Revision>3</Revision>
+      <Revision>4</Revision>
       <Patchlevel>0</Patchlevel>
-      <PrettyName>1.0 Release Candidate 1</PrettyName>
+      <PrettyName>Newest Stable</PrettyName>
       <UpdateFileUrl>http://bla.de</UpdateFileUrl>
-      <NewInThisVersion>What is new in this version 
-      sfasf
-      
-      asdfasdfasdf
-      sdfasdf
-      asdf
-      -
-      -sdfsdfs</NewInThisVersion>
+      <NewInThisVersion>Test</NewInThisVersion>
     </StableVersion>
     <StableVersion>
       <Major>1</Major>
       <Minor>1</Minor>
       <Build>99</Build>
-      <Revision>4</Revision>
+      <Revision>2</Revision>
       <Patchlevel>0</Patchlevel>
-      <PrettyName>1.0 Release Candidate 0</PrettyName>
+      <PrettyName>Older Stable</PrettyName>
       <UpdateFileUrl>http://bla.de</UpdateFileUrl>
       <NewInThisVersion>Older version</NewInThisVersion>
     </StableVersion>
   </StableVersions>
+  <BetaaVersions>
+    <BetaVersion>
+      <Major>1</Major>
+      <Minor>1</Minor>
+      <Build>99</Build>
+      <Revision>3</Revision>
+      <Patchlevel>0</Patchlevel>
+      <PrettyName>Newest Beta</PrettyName>
+      <UpdateFileUrl>http://bla.de</UpdateFileUrl>
+      <NewInThisVersion>Test</NewInThisVersion>
+    </BetaVersion>
+    <BetaVersion>
+      <Major>1</Major>
+      <Minor>1</Minor>
+      <Build>99</Build>
+      <Revision>5</Revision>
+      <Patchlevel>0</Patchlevel>
+      <PrettyName>Older Beta</PrettyName>
+      <UpdateFileUrl>http://bla.de</UpdateFileUrl>
+      <NewInThisVersion>Older version</NewInThisVersion>
+    </BetaVersion>
+  </BetaaVersions>  
 </Winkle>

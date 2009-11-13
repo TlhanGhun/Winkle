@@ -12,10 +12,8 @@ namespace Winkle
 
         public bool updateAvailable = false;
 
-        public int updateMajor = 0;
-        public int updateMinor = 0;
-        public int updateBuild = 0;
-        public int updateRevision = 0;
+        public Version version;
+        public string prettyName = "";
 
         public List<DescriptionOfChanges> changeLog;
         public System.Uri manualDownloadUrl;
