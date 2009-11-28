@@ -35,6 +35,8 @@
             this.buttonIgnore = new System.Windows.Forms.Button();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelShortDescription = new System.Windows.Forms.Label();
+            this.buttonIgnoreThisUpdate = new System.Windows.Forms.Button();
+            this.linkLabelPoweredByWinkle = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,21 +61,21 @@
             // 
             // buttonGetUpdate
             // 
-            this.buttonGetUpdate.Location = new System.Drawing.Point(158, 498);
+            this.buttonGetUpdate.Location = new System.Drawing.Point(567, 498);
             this.buttonGetUpdate.Name = "buttonGetUpdate";
             this.buttonGetUpdate.Size = new System.Drawing.Size(221, 23);
             this.buttonGetUpdate.TabIndex = 2;
-            this.buttonGetUpdate.Text = "Get update";
+            this.buttonGetUpdate.Text = "Go to download page";
             this.buttonGetUpdate.UseVisualStyleBackColor = true;
             this.buttonGetUpdate.Click += new System.EventHandler(this.buttonGetUpdate_Click);
             // 
             // buttonIgnore
             // 
-            this.buttonIgnore.Location = new System.Drawing.Point(448, 498);
+            this.buttonIgnore.Location = new System.Drawing.Point(343, 498);
             this.buttonIgnore.Name = "buttonIgnore";
             this.buttonIgnore.Size = new System.Drawing.Size(218, 23);
             this.buttonIgnore.TabIndex = 3;
-            this.buttonIgnore.Text = "Ignore this update";
+            this.buttonIgnore.Text = "Remind me again next time";
             this.buttonIgnore.UseVisualStyleBackColor = true;
             this.buttonIgnore.Click += new System.EventHandler(this.buttonIgnore_Click);
             // 
@@ -97,11 +99,35 @@
             this.labelShortDescription.TabIndex = 5;
             this.labelShortDescription.Text = resources.GetString("labelShortDescription.Text");
             // 
+            // buttonIgnoreThisUpdate
+            // 
+            this.buttonIgnoreThisUpdate.Enabled = false;
+            this.buttonIgnoreThisUpdate.Location = new System.Drawing.Point(32, 498);
+            this.buttonIgnoreThisUpdate.Name = "buttonIgnoreThisUpdate";
+            this.buttonIgnoreThisUpdate.Size = new System.Drawing.Size(221, 23);
+            this.buttonIgnoreThisUpdate.TabIndex = 6;
+            this.buttonIgnoreThisUpdate.Text = "Skip this version";
+            this.buttonIgnoreThisUpdate.UseVisualStyleBackColor = true;
+            // 
+            // linkLabelPoweredByWinkle
+            // 
+            this.linkLabelPoweredByWinkle.AutoSize = true;
+            this.linkLabelPoweredByWinkle.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabelPoweredByWinkle.Location = new System.Drawing.Point(689, 528);
+            this.linkLabelPoweredByWinkle.Name = "linkLabelPoweredByWinkle";
+            this.linkLabelPoweredByWinkle.Size = new System.Drawing.Size(106, 13);
+            this.linkLabelPoweredByWinkle.TabIndex = 7;
+            this.linkLabelPoweredByWinkle.TabStop = true;
+            this.linkLabelPoweredByWinkle.Text = "Powered by Winkle";
+            this.linkLabelPoweredByWinkle.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelPoweredByWinkle_LinkClicked);
+            // 
             // UpdateNotification
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 550);
+            this.Controls.Add(this.linkLabelPoweredByWinkle);
+            this.Controls.Add(this.buttonIgnoreThisUpdate);
             this.Controls.Add(this.labelShortDescription);
             this.Controls.Add(this.pictureBoxLogo);
             this.Controls.Add(this.buttonIgnore);
@@ -125,5 +151,7 @@
         private System.Windows.Forms.Button buttonIgnore;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
         private System.Windows.Forms.Label labelShortDescription;
+        private System.Windows.Forms.Button buttonIgnoreThisUpdate;
+        private System.Windows.Forms.LinkLabel linkLabelPoweredByWinkle;
     }
 }

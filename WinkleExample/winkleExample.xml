@@ -6,7 +6,6 @@
       <Minor>1</Minor>
       <Build>99</Build>
       <Revision>4</Revision>
-      <Patchlevel>0</Patchlevel>
       <PrettyName>Newest Stable</PrettyName>
       <UpdateFileUrl>http://bla.de</UpdateFileUrl>
       <NewInThisVersion>Test</NewInThisVersion>
@@ -16,19 +15,17 @@
       <Minor>1</Minor>
       <Build>99</Build>
       <Revision>2</Revision>
-      <Patchlevel>0</Patchlevel>
       <PrettyName>Older Stable</PrettyName>
       <UpdateFileUrl>http://bla.de</UpdateFileUrl>
       <NewInThisVersion>Older version</NewInThisVersion>
     </StableVersion>
   </StableVersions>
-  <BetaaVersions>
+  <BetaVersions>
     <BetaVersion>
       <Major>1</Major>
       <Minor>1</Minor>
       <Build>99</Build>
       <Revision>3</Revision>
-      <Patchlevel>0</Patchlevel>
       <PrettyName>Newest Beta</PrettyName>
       <UpdateFileUrl>http://bla.de</UpdateFileUrl>
       <NewInThisVersion>Test</NewInThisVersion>
@@ -38,10 +35,9 @@
       <Minor>1</Minor>
       <Build>99</Build>
       <Revision>5</Revision>
-      <Patchlevel>0</Patchlevel>
       <PrettyName>Older Beta</PrettyName>
       <UpdateFileUrl>http://bla.de</UpdateFileUrl>
       <NewInThisVersion>Older version</NewInThisVersion>
     </BetaVersion>
-  </BetaaVersions>  
+  </BetaVersions>  
 </Winkle>

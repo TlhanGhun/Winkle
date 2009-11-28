@@ -76,7 +76,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\winkle.png" />
+    <Content Include="Resources\winkle.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="winkle.ico" />

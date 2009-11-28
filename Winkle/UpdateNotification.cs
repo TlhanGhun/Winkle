@@ -55,5 +55,10 @@ namespace Winkle
             this.Close();
         }
 
+        private void linkLabelPoweredByWinkle_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://github.com/seboslaw/Winkle");
+        }
+
     }
 }

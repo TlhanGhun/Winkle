@@ -33,8 +33,8 @@ namespace Winkle
 
         public UpdateInfo checkForUpdate(System.Reflection.Assembly assembly, bool includeBetaVersions) 
         {
-                Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-                return _doUpdateCheck(v, includeBetaVersions);
+            Version v = assembly.GetName().Version;
+            return _doUpdateCheck(v, includeBetaVersions);
         }
 
         public UpdateInfo checkForUpdate(int currentMajorVersion, int currentMinorVersion, int currentBuild, int currentRevision, bool includeBetaVersions) 
