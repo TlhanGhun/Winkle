@@ -58,7 +58,7 @@ namespace Winkle
             Version newestAvailableVersion = currentVersion;
             bool updateAvailable = false;
 
-            getChangeLog(false,currentVersion);
+            getChangeLog(includeBetaVersions,currentVersion);
             changeLog.Sort();
             changeLog.Reverse();
             if(changeLog.Count > 0) 
@@ -68,7 +68,7 @@ namespace Winkle
 
             if (includeBetaVersions)
             {
-                getChangeLog(true, newestAvailableVersion);
+                getChangeLog(false, newestAvailableVersion);
             }
 
             changeLog.Sort();
@@ -224,7 +224,7 @@ namespace Winkle
                     {
                         Version localVersion = new Version(getVersion(thisChange, "Major"), getVersion(thisChange, "Minor"), getVersion(thisChange, "Build"), getVersion(thisChange, "Revision"));
 
-                        if (localVersion < minVersion)
+                        if (localVersion <= minVersion)
                         {
                             continue;
                         }
@@ -255,7 +255,6 @@ namespace Winkle
                 try
                 {
                     Winkle_Request = (FileWebRequest)WebRequest.Create(string.Format(updateUrl));
-                    //Winkle_Request.UserAgent = @"Winkle automatic update system " + winkleVersion;
                     Winkle_Response = (FileWebResponse)Winkle_Request.GetResponse();
                     Winkle_XMLdoc = new XmlDocument();
                     Winkle_XMLdoc.Load(Winkle_Response.GetResponseStream());
