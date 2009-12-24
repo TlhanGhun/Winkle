@@ -68,7 +68,7 @@ namespace Winkle
 
             if (includeBetaVersions)
             {
-                getChangeLog(false, newestAvailableVersion);
+                getChangeLog(includeBetaVersions, newestAvailableVersion);
             }
 
             changeLog.Sort();
